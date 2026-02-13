@@ -8,53 +8,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const noBtn = document.getElementById('no-btn');
     const questionText = document.getElementById('question-text');
     const pieces = [];
-    const gridSize = 3; // 3x3 puzzle; change for more complexity
-    const cartoonSrc = 'cartoon.gif'; // Your animated/cartoonized GIF for the puzzle
+    const gridSize = 3; // 3x3 sliding puzzle
+    const cartoonSrc = 'cartoon.gif'; // Your animated/cartoonized GIF for the puzzle pieces
+    let blankIndex = 8; // Position of the blank piece (bottom-right initially)
 
-    // Create puzzle pieces from the animated/cartoonized GIF
-    for (let i = 0; i < gridSize * gridSize; i++) {
+    // Create puzzle pieces: 8 image pieces + 1 blank
+    for (let i = 0; i < gridSize * gridSize - 1; i++) {
         const piece = document.createElement('div');
         piece.classList.add('puzzle-piece');
-        piece.draggable = true;
         piece.dataset.index = i;
-        piece.style.backgroundImage = `url(${cartoonSrc})`; // Pieces show parts of the animated GIF
+        piece.style.backgroundImage = `url(${cartoonSrc})`;
         piece.style.backgroundPosition = `-${(i % gridSize) * 100}px -${Math.floor(i / gridSize) * 100}px`;
+        piece.addEventListener('click', () => movePiece(i));
         pieces.push(piece);
         puzzleBoard.appendChild(piece);
     }
+    // Add the blank piece
+    const blankPiece = document.createElement('div');
+    blankPiece.classList.add('puzzle-piece', 'blank');
+    blankPiece.dataset.index = 8;
+    pieces.push(blankPiece);
+    puzzleBoard.appendChild(blankPiece);
 
-    // Shuffle pieces
+    // Shuffle pieces (ensure solvable)
     shuffleArray(pieces);
     pieces.forEach(piece => puzzleBoard.appendChild(piece));
+    updateBlankIndex();
 
-    // Drag and drop logic
-    let draggedPiece = null;
-
-    pieces.forEach(piece => {
-        piece.addEventListener('dragstart', (e) => {
-            draggedPiece = e.target;
-            e.target.classList.add('dragging');
-        });
-
-        piece.addEventListener('dragend', (e) => {
-            e.target.classList.remove('dragging');
-            draggedPiece = null;
+    function movePiece(clickedIndex) {
+        const blankPos = getPosition(blankIndex);
+        const clickedPos = getPosition(clickedIndex);
+        if (isAdjacent(blankPos, clickedPos)) {
+            // Swap the clicked piece with the blank
+            swapPieces(clickedIndex, blankIndex);
+            blankIndex = clickedIndex;
             checkIfSolved();
-        });
+        }
+    }
 
-        piece.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
+    function getPosition(index) {
+        return { row: Math.floor(index / gridSize), col: index % gridSize };
+    }
 
-        piece.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (draggedPiece && e.target !== draggedPiece) {
-                const draggedIndex = Array.from(puzzleBoard.children).indexOf(draggedPiece);
-                const targetIndex = Array.from(puzzleBoard.children).indexOf(e.target);
-                swapPieces(draggedIndex, targetIndex);
-            }
-        });
-    });
+    function isAdjacent(pos1, pos2) {
+        const rowDiff = Math.abs(pos1.row - pos2.row);
+        const colDiff = Math.abs(pos1.col - pos2.col);
+        return (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
+    }
 
     function swapPieces(index1, index2) {
         const temp = puzzleBoard.children[index1];
@@ -63,9 +63,18 @@ document.addEventListener('DOMContentLoaded', () => {
         puzzleBoard.insertBefore(puzzleBoard.children[index2], puzzleBoard.children[index1]);
     }
 
+    function updateBlankIndex() {
+        for (let i = 0; i < pieces.length; i++) {
+            if (pieces[i].classList.contains('blank')) {
+                blankIndex = i;
+                break;
+            }
+        }
+    }
+
     function checkIfSolved() {
         const currentOrder = Array.from(puzzleBoard.children).map(piece => parseInt(piece.dataset.index));
-        const solvedOrder = Array.from({length: gridSize * gridSize}, (_, i) => i);
+        const solvedOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // Solved state: pieces 0-7 in order, blank at 8
         if (JSON.stringify(currentOrder) === JSON.stringify(solvedOrder)) {
             // Puzzle solved: Hide puzzle, show real static image + Spotify, then first modal
             document.getElementById('puzzle-container').style.display = 'none';
