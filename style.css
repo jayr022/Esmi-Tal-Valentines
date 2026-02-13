@@ -1,125 +1,65 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: system-ui, sans-serif;
-    background: #FFDAE9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+    text-align: center;
 }
 
-/* ---------------- ENVELOPE ---------------- */
-
-#envelopeStage {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #FFDAE9;
-    z-index: 10;
+.container {
+    padding: 20px;
 }
 
+.hidden {
+    display: none;
+}
+
+/* Envelope */
 .envelope {
-    width: 300px;
-    height: 200px;
-    background: #f5e6d3;
-    border-radius: 6px;
-    position: relative;
+    font-size: 80px;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
 .envelope:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
-.envelope-flap {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #e8d5c4;
-    clip-path: polygon(0 0, 50% 50%, 100% 0);
-    transform-origin: top;
-    transition: transform 0.8s ease;
-}
-
-.envelope.opening .envelope-flap {
-    transform: rotateX(-170deg);
-}
-
-.envelope-heart {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 40px;
-}
-
-/* ---------------- MODAL ---------------- */
-
-.container {
-    display: none;
-    background: white;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-body.show-modal .container {
-    display: block;
-}
-
-.modal-view {
-    display: none;
-    text-align: center;
-}
-
-.modal-view.visible {
-    display: block;
-}
-
-.modal-title {
-    margin-bottom: 20px;
-}
-
-/* ---------------- PUZZLE ---------------- */
-
+/* Puzzle */
 .puzzle-container {
     position: relative;
-    width: 450px;
-    height: 450px;
-    margin: 0 auto 20px;
+    width: min(450px, 90vw);
+    height: min(450px, 90vw);
+    margin: 20px auto;
 }
 
 .puzzle-grid {
     display: grid;
-    grid-template-columns: repeat(3, 150px);
-    grid-template-rows: repeat(3, 150px);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: 2px;
+    width: 100%;
+    height: 100%;
 }
 
 .puzzle-tile {
-    width: 150px;
-    height: 150px;
+    background-image: url("cartoon.png");
+    background-size: 300% 300%;
+    background-repeat: no-repeat;
     cursor: pointer;
 }
 
-.puzzle-tile.empty {
+.empty {
     background: white;
+    cursor: default;
 }
 
-/* Full image reveal */
+/* Overlay */
 .puzzle-full-image-overlay {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
 }
 
 .puzzle-full-image-overlay.show {
@@ -129,40 +69,28 @@ body.show-modal .container {
 .puzzle-full-image-overlay img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
-/* ---------------- BUTTONS ---------------- */
-
-.continue-btn,
-.yes-only-btn,
-.no-btn {
-    padding: 12px 24px;
-    font-size: 18px;
-    border-radius: 40px;
+/* Buttons */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 10px;
+    margin: 10px;
 }
 
-.continue-btn {
-    background: #4caf50;
+#yesBtn {
+    background: #ff4d6d;
     color: white;
 }
 
-.yes-only-btn {
-    background: #FFDAE9;
+#noBtn {
+    background: #ccc;
 }
 
-.no-btn {
-    background: #f44336;
-    color: white;
-    position: absolute;
-}
-
-/* ---------------- MOBILE ---------------- */
-
-@media (max-width: 500px) {
-    .puzzle-container {
-        transform: scale(0.8);
-    }
+.buttons {
+    margin-top: 20px;
 }
