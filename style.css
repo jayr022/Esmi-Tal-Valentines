@@ -27,12 +27,18 @@ h1 {
     width: 100px;
     height: 100px;
     background-size: 315px 315px;
-    cursor: grab;
+    cursor: pointer;
     border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #e91e63;
 }
 
-.puzzle-piece.dragging {
-    opacity: 0.5;
+.blank {
+    background-color: #fff !important;
+    cursor: default;
 }
 
 #real-image {
@@ -116,5 +122,6 @@ button {
         width: 80px;
         height: 80px;
         background-size: 250px 250px;
+        font-size: 20px;
     }
 }
