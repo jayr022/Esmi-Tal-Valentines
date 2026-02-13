@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const instructionsModal = document.getElementById('instructions-modal');
+    const solvedPreview = document.getElementById('solved-preview');
+    const startBtn = document.getElementById('start-btn');
+    const puzzleContainer = document.getElementById('puzzle-container');
     const puzzleBoard = document.getElementById('puzzle-board');
     const successContainer = document.getElementById('success-container');
     const messageModal = document.getElementById('message-modal');
@@ -9,17 +13,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const questionText = document.getElementById('question-text');
     const pieces = [];
     const gridSize = 3; // 3x3 sliding puzzle
-    const cartoonSrc = 'cartoon.gif'; // Your animated/cartoonized GIF for the puzzle pieces
     let blankIndex = 8; // Position of the blank piece (bottom-right initially)
 
-    // Create puzzle pieces: 8 image pieces + 1 blank
-    for (let i = 0; i < gridSize * gridSize - 1; i++) {
+    // Show solved preview for 5 seconds, then hide it
+    setTimeout(() => {
+        solvedPreview.style.display = 'none';
+    }, 5000);
+
+    // Start button to begin the puzzle
+    startBtn.addEventListener('click', () => {
+        instructionsModal.style.display = 'none';
+        puzzleContainer.style.display = 'block';
+    });
+
+    // Create puzzle pieces: 8 numbered tiles (1-8) + 1 blank
+    for (let i = 1; i < gridSize * gridSize; i++) {
         const piece = document.createElement('div');
         piece.classList.add('puzzle-piece');
-        piece.dataset.index = i;
-        piece.style.backgroundImage = `url(${cartoonSrc})`;
-        piece.style.backgroundPosition = `-${(i % gridSize) * 100}px -${Math.floor(i / gridSize) * 100}px`;
-        piece.addEventListener('click', () => movePiece(i));
+        piece.dataset.index = i - 1; // 0-7 for tracking
+        piece.textContent = i; // Number 1-8
+        piece.addEventListener('click', () => movePiece(i - 1));
         pieces.push(piece);
         puzzleBoard.appendChild(piece);
     }
@@ -74,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkIfSolved() {
         const currentOrder = Array.from(puzzleBoard.children).map(piece => parseInt(piece.dataset.index));
-        const solvedOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // Solved state: pieces 0-7 in order, blank at 8
+        const solvedOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // Solved state: numbers 0-7 in order, blank at 8
         if (JSON.stringify(currentOrder) === JSON.stringify(solvedOrder)) {
             // Puzzle solved: Hide puzzle, show real static image + Spotify, then first modal
             document.getElementById('puzzle-container').style.display = 'none';
