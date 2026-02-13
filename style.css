@@ -33,37 +33,6 @@ h1, h2 {
     max-width: 90%;
 }
 
-.preview-board {
-    display: grid;
-    grid-template-columns: repeat(3, 50px);
-    grid-template-rows: repeat(3, 50px);
-    gap: 2px;
-    margin: 20px auto;
-    width: 156px;
-    height: 156px;
-    border: 2px solid #e91e63;
-    background-color: #fff;
-}
-
-.preview-piece {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background-color: #ff6b9d;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.preview-piece.blank {
-    background-color: #fff !important;
-    color: transparent;
-}
-
 #puzzle-board {
     display: grid;
     grid-template-columns: repeat(3, 100px);
@@ -184,15 +153,4 @@ button {
         height: 80px;
         font-size: 20px;
     }
-    .preview-board {
-        grid-template-columns: repeat(3, 40px);
-        grid-template-rows: repeat(3, 40px);
-        width: 126px;
-        height: 126px;
-    }
-    .preview-piece {
-        width: 40px;
-        height: 40px;
-        font-size: 14px;
-    }
-    }
+}
