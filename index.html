@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❤️</title>
+    <title>Adi❤️v-4.3.Final.Final2.FinalF</title>
     <style>
         * {
             margin: 0;
@@ -466,4 +466,53 @@
             }
         }
 
-        /* Short viewport
+        /* Short viewport: shrink contents to respect padding / prevent overflow */
+        @media (max-height: 800px) {
+            body {
+                padding: 14px;
+            }
+            .container {
+                transform: scale(0.95);
+                transform-origin: center center;
+                padding: 22px 36px;
+            }
+        }
+        @media (max-height: 700px) {
+            body {
+                padding: 12px;
+            }
+            .container {
+                transform: scale(0.85);
+                transform-origin: center center;
+                padding: 20px 36px;
+            }
+        }
+        @media (max-height: 600px) {
+            .container {
+                transform: scale(0.72);
+                padding: 16px 36px;
+            }
+        }
+        @media (max-height: 500px) {
+            .container {
+                transform: scale(0.6);
+                padding: 12px 36px;
+            }
+        }
+        @media (max-height: 420px) {
+            .container {
+                transform: scale(0.5);
+                padding: 10px 36px;
+            }
+        }
+        /* Short and narrow: apply stronger scale so content fits */
+        @media (max-height: 600px) and (max-width: 480px) {
+            .container {
+                transform: scale(0.65);
+                padding: 12px 36px;
+            }
+        }
+        @media (max-height: 500px) and (max-width: 420px) {
+            .container {
+                transform: scale(0.55);
+                padding: 10px 36px
