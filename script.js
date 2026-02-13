@@ -19,15 +19,14 @@ let emptyIndex = 8;
 let noClickCount = 0;
 const maxNoClicks = 5;
 
-/* -------------------------
-   INIT PUZZLE
-------------------------- */
+const IMAGE_SIZE = 450;
+const TILE_SIZE = 150; // 450 / 3
+
+/* ------------------ PUZZLE INIT ------------------ */
 
 function initPuzzle() {
-    puzzleGrid.innerHTML = "";
     board = [0,1,2,3,4,5,6,7,null];
     emptyIndex = 8;
-
     shuffleBoard();
     renderBoard();
 }
@@ -36,7 +35,7 @@ function shuffleBoard() {
     for (let i = 0; i < 200; i++) {
         const adj = getAdjacent(emptyIndex);
         const rand = adj[Math.floor(Math.random() * adj.length)];
-        swap(emptyIndex, rand);
+        [board[emptyIndex], board[rand]] = [board[rand], board[emptyIndex]];
         emptyIndex = rand;
     }
 }
@@ -44,38 +43,33 @@ function shuffleBoard() {
 function renderBoard() {
     puzzleGrid.innerHTML = "";
 
-    board.forEach((value, index) => {
+    board.forEach((val, idx) => {
         const tile = document.createElement("div");
         tile.className = "puzzle-tile";
-        tile.dataset.index = index;
+        tile.dataset.index = idx;
 
-        if (value === null) {
+        if (val === null) {
             tile.classList.add("empty");
         } else {
             tile.style.backgroundImage = "url('./cartoon.png')";
-            tile.style.backgroundSize = "300% 300%";
+            tile.style.backgroundSize = IMAGE_SIZE + "px " + IMAGE_SIZE + "px";
             tile.style.backgroundPosition =
-                `${-(value % 3) * 100}% ${-Math.floor(value / 3) * 100}%`;
+                `-${(val % 3) * TILE_SIZE}px -${Math.floor(val / 3) * TILE_SIZE}px`;
+            tile.style.backgroundRepeat = "no-repeat";
         }
 
-        tile.addEventListener("click", handleTileClick);
+        tile.addEventListener("click", () => handleTileClick(idx));
         puzzleGrid.appendChild(tile);
     });
 }
 
-function handleTileClick(e) {
-    const index = parseInt(e.currentTarget.dataset.index);
-
+function handleTileClick(index) {
     if (getAdjacent(emptyIndex).includes(index)) {
-        swap(emptyIndex, index);
+        [board[emptyIndex], board[index]] = [board[index], board[emptyIndex]];
         emptyIndex = index;
         renderBoard();
         checkWin();
     }
-}
-
-function swap(a, b) {
-    [board[a], board[b]] = [board[b], board[a]];
 }
 
 function getAdjacent(index) {
@@ -97,12 +91,10 @@ function checkWin() {
     }
 
     puzzleOverlay.classList.add("show");
-    continueBtn.style.display = "block";
+    continueBtn.style.display = "inline-block";
 }
 
-/* -------------------------
-   ENVELOPE FLOW
-------------------------- */
+/* ------------------ FLOW ------------------ */
 
 envelope.addEventListener("click", () => {
     envelope.classList.add("opening");
@@ -114,18 +106,12 @@ envelope.addEventListener("click", () => {
     }, 800);
 });
 
-/* -------------------------
-   CONTINUE
-------------------------- */
-
 continueBtn.addEventListener("click", () => {
     puzzleView.classList.remove("visible");
     questionView.classList.add("visible");
 });
 
-/* -------------------------
-   NO BUTTON
-------------------------- */
+/* ------------------ NO BUTTON ------------------ */
 
 noBtn.addEventListener("click", () => {
     noClickCount++;
@@ -133,21 +119,16 @@ noBtn.addEventListener("click", () => {
     const scale = Math.max(0.2, 1 - noClickCount * 0.2);
     noBtn.style.transform = `scale(${scale})`;
 
-    const containerRect = modalInner.getBoundingClientRect();
-    const maxX = containerRect.width - 120;
-    const maxY = containerRect.height - 60;
-
-    noBtn.style.left = `${Math.random() * maxX}px`;
-    noBtn.style.top = `${Math.random() * maxY}px`;
+    const rect = modalInner.getBoundingClientRect();
+    noBtn.style.left = `${Math.random() * (rect.width - 120)}px`;
+    noBtn.style.top = `${Math.random() * (rect.height - 60)}px`;
 
     if (noClickCount >= maxNoClicks) {
         noBtn.style.display = "none";
     }
 });
 
-/* -------------------------
-   YES BUTTON
-------------------------- */
+/* ------------------ YES BUTTON ------------------ */
 
 yesBtn.addEventListener("click", () => {
     questionView.classList.remove("visible");
