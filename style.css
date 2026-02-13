@@ -5,57 +5,29 @@
 }
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #111;
+    font-family: system-ui, sans-serif;
+    background: #FFDAE9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
+}
+
+/* ---------------- ENVELOPE ---------------- */
+
+#envelopeStage {
+    position: fixed;
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #FFDAE9;
-    overflow: auto;
-    padding: 24px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-/* Envelope Stage */
-#envelopeStage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    inset: 0;
     z-index: 10;
 }
 
-/* Modal */
-body.show-modal .container {
-    display: flex;
-}
-
-.container {
-    display: none;
-    flex-direction: column;
-    text-align: center;
-    background: white;
-    padding: 40px 36px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    max-width: 650px;
-    width: 95%;
-    min-height: 520px;
-}
-
-.modal-inner {
-    position: relative;
-    flex: 1;
-}
-
-/* Envelope */
 .envelope {
     width: 300px;
-    height: 220px;
+    height: 200px;
     background: #f5e6d3;
     border-radius: 6px;
     position: relative;
@@ -86,11 +58,26 @@ body.show-modal .container {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 40px;
 }
 
-/* Puzzle View */
+/* ---------------- MODAL ---------------- */
+
+.container {
+    display: none;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+body.show-modal .container {
+    display: block;
+}
+
 .modal-view {
     display: none;
+    text-align: center;
 }
 
 .modal-view.visible {
@@ -98,43 +85,36 @@ body.show-modal .container {
 }
 
 .modal-title {
-    font-size: 22px;
     margin-bottom: 20px;
 }
 
-/* Puzzle Container */
+/* ---------------- PUZZLE ---------------- */
+
 .puzzle-container {
+    position: relative;
+    width: 450px;
+    height: 450px;
     margin: 0 auto 20px;
-    width: 320px;
-    max-width: 100%;
 }
 
 .puzzle-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
     gap: 2px;
-    width: 100%;
-    aspect-ratio: 1;
 }
 
 .puzzle-tile {
-    background-size: 300% 300%;
-    background-repeat: no-repeat;
-    border-radius: 8px;
+    width: 150px;
+    height: 150px;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform 0.15s ease;
 }
-
-/* IMPORTANT: removed background-position: center */
 
 .puzzle-tile.empty {
-    background: #fff !important;
-    box-shadow: none;
-    cursor: default;
+    background: white;
 }
 
-/* Full Image Reveal */
+/* Full image reveal */
 .puzzle-full-image-overlay {
     position: absolute;
     inset: 0;
@@ -149,10 +129,10 @@ body.show-modal .container {
 .puzzle-full-image-overlay img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
 }
 
-/* Buttons */
+/* ---------------- BUTTONS ---------------- */
+
 .continue-btn,
 .yes-only-btn,
 .no-btn {
@@ -162,8 +142,6 @@ body.show-modal .container {
     border: none;
     cursor: pointer;
     margin-top: 10px;
-    font-weight: 600;
-    transition: 0.2s ease;
 }
 
 .continue-btn {
@@ -181,30 +159,10 @@ body.show-modal .container {
     position: absolute;
 }
 
-.continue-btn:hover,
-.yes-only-btn:hover,
-.no-btn:hover {
-    transform: scale(1.05);
-}
+/* ---------------- MOBILE ---------------- */
 
-/* Responsive */
-@media (max-width: 480px) {
-    .container {
-        padding: 20px;
-        min-height: 420px;
-    }
-
-    .modal-title {
-        font-size: 18px;
-    }
-
+@media (max-width: 500px) {
     .puzzle-container {
-        width: 280px;
+        transform: scale(0.8);
     }
-
-    .continue-btn,
-    .yes-only-btn,
-    .no-btn {
-        font-size: 16px;
-    }
-    }
+}
