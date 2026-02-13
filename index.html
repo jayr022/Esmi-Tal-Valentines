@@ -1,75 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Adi ❤️</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ENVELOPE STAGE -->
-<div id="envelopeStage">
-    <div class="envelope" id="envelope">
-        <div class="envelope-flap"></div>
-        <div class="envelope-heart">❤️</div>
-    </div>
-</div>
-
-<!-- MAIN CONTAINER -->
 <div class="container">
 
-    <div class="modal-inner">
-
-        <!-- PUZZLE VIEW -->
-        <div class="modal-view visible" id="puzzleView">
-            <h2 class="modal-title">
-                Solve the Puzzle to Reveal Your Valentine Message!
-            </h2>
-
-            <div class="puzzle-container">
-                <div class="puzzle-grid" id="puzzleGrid"></div>
-
-                <div class="puzzle-full-image-overlay" id="puzzleOverlay">
-                    <img src="real.png" alt="Revealed Image">
-                </div>
-            </div>
-
-            <button class="continue-btn" id="continueBtn" style="display:none;">
-                Continue
-            </button>
+    <!-- Envelope Section -->
+    <div id="envelopeSection">
+        <div class="envelope" id="envelope">
+            💌
         </div>
-
-        <!-- QUESTION VIEW -->
-        <div class="modal-view" id="questionView">
-            <h2 class="modal-title">Will you be my Valentine?</h2>
-
-            <div class="custom-message">
-                You've unlocked a special message ❤️
-            </div>
-
-            <button class="yes-only-btn" id="yesBtn">Yes</button>
-            <button class="no-btn" id="noBtn">No</button>
-        </div>
-
-        <!-- FINAL VIEW -->
-        <div class="modal-view" id="finalView">
-            <h2 class="modal-title">
-                Yay! Happy Valentine's Day ❤️
-            </h2>
-
-            <div class="custom-message">
-                Thank you for saying yes 🥰
-            </div>
-
-            <button class="continue-btn" onclick="location.reload()">
-                Restart
-            </button>
-        </div>
-
+        <p>Tap the envelope</p>
     </div>
-</div>
 
-<script src="script.js"></script>
-</body>
-</html>
+    <!-- Puzzle Section -->
+    <div id="puzzleSection" class="hidden">
+        <div class="puzzle-container">
+            <div class="puzzle-grid" id="puzzleGrid"></div>
+
+            <div class="puzzle-full-image-overlay" id="puzzleOverlay">
+                <img src="real.png" alt="Revealed Image">
+            </div>
+        </div>
+
+        <button id="continueBtn" class="hidden">Continue ❤️</button>
+    </div>
+
+    <!-- Valentine Question -->
+    <div id="questionSection" class="hidden">
+        <h2>Will you be my Valentine? ❤️</h2>
+        <div class="buttons">
+            <button id="yesBtn">YES 💖</button>
+            <button id="noBtn">No 😢</button>
+        </div>
+    </div>
+
+    <!-- Final Message -->
+    <div id="finalSection" class="hidden">
+        <h2>Yayyyy!! 💕</h2>
+        <p>I love you so much ❤️</p>
+        <
