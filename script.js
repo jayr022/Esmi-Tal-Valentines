@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     const instructionsModal = document.getElementById('instructions-modal');
-    const solvedPreview = document.getElementById('solved-preview');
     const startBtn = document.getElementById('start-btn');
     const puzzleContainer = document.getElementById('puzzle-container');
     const puzzleBoard = document.getElementById('puzzle-board');
@@ -14,11 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const pieces = [];
     const gridSize = 3; // 3x3 sliding puzzle
     let blankIndex = 8; // Position of the blank piece (bottom-right initially)
-
-    // Show solved preview for 5 seconds, then hide it
-    setTimeout(() => {
-        solvedPreview.style.display = 'none';
-    }, 5000);
 
     // Start button to begin the puzzle
     startBtn.addEventListener('click', () => {
